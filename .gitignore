@@ -1,6 +1,7 @@
 # Ignore Keras/TensorFlow model files
 *.h5
 *.keras
+*.tflite
 *.pb
 variables/
 assets/
