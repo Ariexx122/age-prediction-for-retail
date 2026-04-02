@@ -3,13 +3,32 @@ from fastapi.responses import JSONResponse
 import numpy as np
 from tensorflow.keras.models import load_model
 from PIL import Image
+import gdown
 import io
+import os
+from contextlib import asynccontextmanager
 
-
-app = FastAPI()
 
 MODEL_PATH = "age_prediction_model.keras"
-model = load_model(MODEL_PATH)
+FILE_ID = "1o1_goGYHKE1L-CPY2McgThK1dsPaw2yx"
+model = None
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global model
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading model...")
+        url = f"https://drive.google.com/uc?id={FILE_ID}"
+        gdown.download(url, MODEL_PATH, quiet=False)
+
+    print("Loading model into memory...")
+    model = load_model(MODEL_PATH)
+    print("Model loaded successfully.")
+    yield
+    model = None
+
+app = FastAPI(lifespan=lifespan)
 
 IMG_SIZE = (224, 224)
 
