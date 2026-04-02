@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 import numpy as np
-import tflite_runtime.interpreter as tflite
+from ai_edge_litert.interpreter import Interpreter
 from PIL import Image
 import gdown
 import io
@@ -22,7 +22,7 @@ async def lifespan(app: FastAPI):
             f"https://drive.google.com/uc?id={FILE_ID}", MODEL_PATH, quiet=False)
 
     print("Loading model...")
-    interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+    interpreter = Interpreter(model_path=MODEL_PATH)
     interpreter.allocate_tensors()
     print("Model loaded.")
     yield
