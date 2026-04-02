@@ -1,3 +1,15 @@
+# Ignore the entire data directory (images and csv)
+data/
+
+# Ignore any compressed archives
+*.zip
+*.tar.gz
+
+# Ignore python cache and local environment files
+__pycache__/
+.env
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
