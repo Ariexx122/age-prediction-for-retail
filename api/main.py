@@ -38,11 +38,6 @@ def preprocess_image(image: Image.Image):
     return np.expand_dims(image, axis=0)
 
 
-@app.get("/")
-def read_root():
-    return {"message": "Age Prediction API is running"}
-
-
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     try:

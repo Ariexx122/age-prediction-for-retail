@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Age Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="eyebrow">Computer Vision · Age Detection</div>
+      <h1>How old do you <span>look?</span></h1>
+      <p class="subtitle">Upload a photo or use your camera to find out.</p>
+    </header>
+
+    <div class="card">
+      <div class="tabs">
+        <button
+          class="tab active"
+          id="tab-upload"
+          onclick="switchTab('upload')"
+        >
+          Upload photo
+        </button>
+        <button class="tab" id="tab-webcam" onclick="switchTab('webcam')">
+          Use camera
+        </button>
+      </div>
+
+      <!-- Upload panel -->
+      <div id="upload-panel">
+        <img id="preview" class="preview-img" alt="Preview" />
+        <div
+          class="upload-zone"
+          id="dropzone"
+          onclick="document.getElementById('fileInput').click()"
+          ondragover="
+            event.preventDefault();
+            this.style.background = '#f0efe9';
+          "
+          ondragleave="this.style.background = '#fafaf8'"
+          ondrop="handleDrop(event)"
+        >
+          <svg
+            class="upload-icon"
+            viewBox="0 0 36 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="36" height="36" rx="8" fill="#1a1a1a" />
+            <path
+              d="M18 10v12M12 16l6-6 6 6"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M10 26h16"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <p class="upload-label">Drop a photo here or click to browse</p>
+          <p class="upload-hint">JPG, PNG, WEBP</p>
+        </div>
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          style="display: none"
+          onchange="previewFile(this)"
+        />
+        <button
+          class="btn btn-primary"
+          style="margin-top: 1rem"
+          id="predict-upload-btn"
+          onclick="predictFromUpload()"
+          disabled
+        >
+          Predict age
+        </button>
+      </div>
+
+      <!-- Webcam panel -->
+      <div id="webcam-panel" style="display: none">
+        <div id="webcam-placeholder" class="webcam-placeholder">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <rect
+              x="2"
+              y="8"
+              width="32"
+              height="22"
+              rx="4"
+              stroke="#ccc"
+              stroke-width="1.5"
+            />
+            <circle cx="18" cy="19" r="6" stroke="#ccc" stroke-width="1.5" />
+            <circle cx="18" cy="19" r="2.5" fill="#ccc" />
+            <path
+              d="M13 8l2-4h6l2 4"
+              stroke="#ccc"
+              stroke-width="1.5"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <p>Camera will appear here</p>
+        </div>
+        <video id="video" autoplay playsinline></video>
+        <canvas id="snapshot"></canvas>
+        <button class="btn" id="start-camera-btn" onclick="startCamera()">
+          Enable camera
+        </button>
+        <button
+          class="btn btn-primary"
+          id="capture-btn"
+          onclick="captureAndPredict()"
+          style="display: none"
+        >
+          Capture & predict
+        </button>
+        <button
+          class="btn"
+          id="retake-btn"
+          onclick="retake()"
+          style="display: none"
+        >
+          Retake
+        </button>
+      </div>
+
+      <div class="spinner" id="spinner"></div>
+      <p class="error-msg" id="error-msg"></p>
+    </div>
+
+    <!-- Result -->
+    <div class="result-card" id="result-card">
+      <p class="result-label">Estimated age</p>
+      <p class="result-age" id="age-output">—</p>
+      <p class="result-unit">years old</p>
+      <button
+        class="btn"
+        style="
+          margin-top: 1.75rem;
+          max-width: 180px;
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+        "
+        onclick="reset()"
+      >
+        Try another
+      </button>
+    </div>
+
+    <footer>
+      Powered by
+      <a href="https://age-prediction-for-retail.onrender.com" target="_blank"
+        >age-prediction-for-retail.onrender.com</a
+      >
+    </footer>
+
+    <script src="api.js"></script>
+  </body>
+</html>
