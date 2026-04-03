@@ -7,6 +7,8 @@ import gdown
 import io
 import os
 from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
+
 
 MODEL_PATH = "age_prediction_model.tflite"
 FILE_ID = "1k3rvXovXY6RYkVnR5HPi5mtQi_aHDDdE"  # the .tflite file's Drive ID
@@ -30,6 +32,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 IMG_SIZE = (224, 224)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all (good for now)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def preprocess_image(image: Image.Image):
