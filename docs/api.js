@@ -150,9 +150,11 @@ function reset() {
 
 function showSpinner() {
   document.getElementById("spinner").style.display = "block";
+  document.getElementById("loading-msg").style.display = "block";
 }
 function hideSpinner() {
   document.getElementById("spinner").style.display = "none";
+  document.getElementById("loading-msg").style.display = "none";
 }
 function showError(msg) {
   const el = document.getElementById("error-msg");
