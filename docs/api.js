@@ -1,5 +1,5 @@
 const API_URL =
-  "http://age-prediction-api-hmdyf2c0czdegba6.canadacentral-01.azurewebsites.net/predict";
+  "https://age-prediction-api-hmdyf2c0czdegba6.canadacentral-01.azurewebsites.net/predict";
 let stream = null;
 let selectedFile = null;
 
