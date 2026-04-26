@@ -1,4 +1,5 @@
-const API_URL = "https://age-prediction-for-retail.onrender.com/predict";
+const API_URL =
+  "http://age-prediction-api-hmdyf2c0czdegba6.canadacentral-01.azurewebsites.net/predict";
 let stream = null;
 let selectedFile = null;
 
